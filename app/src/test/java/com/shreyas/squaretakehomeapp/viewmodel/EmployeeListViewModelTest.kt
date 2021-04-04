@@ -1,7 +1,6 @@
 package com.shreyas.squaretakehomeapp.viewmodel
 
 import android.os.Looper
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.shreyas.squaretakehomeapp.base.BaseViewModelTest
@@ -65,15 +64,19 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
     @Test
     fun `test fetch employee list http success is as expected`() {
-        val employeeList = MutableLiveData<List<Employee>>().value
+        val response = getObjectFromJsonFile(
+            jsonFile = "employee_list.json",
+            tClass = EmployeeResponse::class.java
+        )
+        viewModel._employeeList.postValue(response?.employees)
         coroutineTestRule.runBlockingTest {
             viewModel.employeeList.observeForever(employeeListResponseObserver)
             `when`(repository.getEmployeeDirectory()).thenAnswer {
-                employeeList
+                viewModel._employeeList
             }
             viewModel.fetchEmployeeList()
             Shadows.shadowOf(Looper.getMainLooper()).idle()
-            assertThat(viewModel.employeeList.value).isEqualTo(employeeList)
+            assertThat(viewModel.employeeList.value).isEqualTo(viewModel._employeeList.value)
             verify(repository, times(2)).getEmployeeDirectory()
         }
     }
@@ -96,6 +99,6 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
     @After
     fun tearDown() {
-        viewModel.employeeList.observeForever(employeeListResponseObserver)
+        viewModel.employeeList.removeObserver(employeeListResponseObserver)
     }
 }

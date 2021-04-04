@@ -3,7 +3,7 @@ object Versions {
     const val gradle = "4.1.2"
     const val kotlin = "1.4.21"
     const val kotlinCoroutine = "1.4.0"
-    const val navigation = "2.3.3"
+    const val navigation = "2.3.4"
 
     const val coreKTX = "1.3.2"
     const val appCompat = "1.2.0"
