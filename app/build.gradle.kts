@@ -52,6 +52,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         javaParameters = true
+        freeCompilerArgs =
+            freeCompilerArgs + "-Xjvm-default=enable" + "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi" + "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+    }
+    kapt {
+        generateStubs = true
+        correctErrorTypes = true
+        javacOptions {
+            option("-Adagger.fastInit=enabled")
+        }
     }
     lintOptions {
         isWarningsAsErrors = true
@@ -129,6 +138,12 @@ dependencies {
     testImplementation(AppDependencies.mockk)
     testImplementation(AppDependencies.nharmaanMockito)
     testImplementation(AppDependencies.okHttpMockServer)
+
+    kaptTest(AppDependencies.daggerProcessor)
+    kaptTest(AppDependencies.daggerCompiler)
+    testImplementation(AppDependencies.dagger)
+    testImplementation(AppDependencies.daggerAndroid)
+    testImplementation(AppDependencies.daggerAndroidSupport)
 
     androidTestImplementation(AppDependencies.androidXTestRunner)
     androidTestImplementation(AppDependencies.androidxTestRules)

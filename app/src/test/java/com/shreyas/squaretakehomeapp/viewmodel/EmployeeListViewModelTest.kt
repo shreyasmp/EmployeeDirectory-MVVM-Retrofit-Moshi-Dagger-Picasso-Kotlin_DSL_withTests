@@ -1,6 +1,5 @@
 package com.shreyas.squaretakehomeapp.viewmodel
 
-import android.os.Looper
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.shreyas.squaretakehomeapp.base.BaseViewModelTest
@@ -15,7 +14,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.robolectric.Shadows
 
 @ExperimentalCoroutinesApi
 class EmployeeListViewModelTest : BaseViewModelTest() {
@@ -75,7 +73,6 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
                 viewModel._employeeList
             }
             viewModel.fetchEmployeeList()
-            Shadows.shadowOf(Looper.getMainLooper()).idle()
             assertThat(viewModel.employeeList.value).isEqualTo(viewModel._employeeList.value)
             verify(repository, times(2)).getEmployeeDirectory()
         }
@@ -90,7 +87,6 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
                 exception.message
             }
             viewModel.fetchEmployeeList()
-            Shadows.shadowOf(Looper.getMainLooper()).idle()
             assertThat(viewModel.employeeList.value).isNull()
             assertThat(viewModel.employeeList.value).isEqualTo(exception.message)
             verify(repository, times(2)).getEmployeeDirectory()

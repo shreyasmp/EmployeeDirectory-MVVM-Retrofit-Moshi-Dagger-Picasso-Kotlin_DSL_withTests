@@ -7,12 +7,10 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class MainApplication : Application(), HasAndroidInjector {
+open class MainApplication : Application(), HasAndroidInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Any>
-
-    var application: MainApplication = this
 
     override fun onCreate() {
         super.onCreate()

@@ -11,6 +11,7 @@ import com.shreyas.squaretakehomeapp.runner.DirectoryRobolectricTestRunner
 import com.shreyas.squaretakehomeapp.utils.TestJsonUtils
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
+import io.mockk.clearAllMocks
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import org.junit.AfterClass
@@ -57,6 +58,7 @@ class EmployeeListAdapterRoboTest {
 
     @Before
     fun setUp() {
+        clearAllMocks()
         adapter = EmployeeListAdapter(mockPicasso)
         loadEmployeeList()
         MockitoAnnotations.openMocks(this)
