@@ -79,26 +79,31 @@ class EmployeeListAdapterRoboTest {
 
     @Test
     fun `test if view holder is bind properly`() {
+        // Setup
         val viewHolder = createViewHolder()
         adapter.updateEmployeeList(loadEmployeeList())
+
+        doReturn(mockRequestCreator).`when`(mockPicasso).load(anyString())
+        doReturn(mockRequestCreator).`when`(mockRequestCreator).placeholder(anyInt())
+        doNothing().`when`(mockRequestCreator).into(viewHolder.binding.employeePhoto)
+
+        // Execution
         adapter.onBindViewHolder(viewHolder, 0)
         viewHolder.bind(loadEmployeeList()[0])
         viewHolder.binding.employeeName.text = loadEmployeeList()[0].full_name
         viewHolder.binding.employeeTeam.text = loadEmployeeList()[0].team
 
-        `when`(mockPicasso.load(anyString())).thenReturn(mockRequestCreator)
-        `when`(mockRequestCreator.error(anyInt())).thenReturn(mockRequestCreator)
-        `when`(mockRequestCreator.into(mockImageView)).thenReturn(Unit)
-
+        // Assertion
         assertThat(viewHolder.binding.employeeName.visibility).isEqualTo(View.VISIBLE)
         assertThat(viewHolder.binding.employeeName.text).isEqualTo("Justine Mason")
 
         assertThat(viewHolder.binding.employeeTeam.visibility).isEqualTo(View.VISIBLE)
         assertThat(viewHolder.binding.employeeTeam.text).isEqualTo("Point of Sale")
 
+        // Verification
         verify(mockPicasso).load(anyString())
-        verify(mockRequestCreator).error(anyInt())
-        verify(mockRequestCreator).into(mockImageView)
+        verify(mockRequestCreator).placeholder(anyInt())
+        verify(mockRequestCreator).into(viewHolder.binding.employeePhoto)
     }
 
     private fun createViewHolder(): EmployeeListAdapter.EmployeeViewHolder {
