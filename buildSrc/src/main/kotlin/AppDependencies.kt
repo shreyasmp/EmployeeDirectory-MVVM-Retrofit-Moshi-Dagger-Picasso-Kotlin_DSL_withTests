@@ -3,6 +3,7 @@ object AppDependencies {
     const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     const val kotlinCoRoutinesCore =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutine}"
+    const val jakeWhartonCoRoutineAdapter = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.coRoutineAdapter}"
 
     const val appcompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val fragmentKTX = "androidx.fragment:fragment-ktx:${Versions.fragmentKTX}"
@@ -24,7 +25,10 @@ object AppDependencies {
         "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.archLifeCycle}"
 
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val retrofitMoshi = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
+    const val moshiKotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
+    const val moshiCodegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
     const val okhttp3Interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp3}"
     const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
 

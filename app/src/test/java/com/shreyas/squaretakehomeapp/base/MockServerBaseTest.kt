@@ -8,7 +8,7 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 abstract class MockServerBaseTest {
 
@@ -51,7 +51,7 @@ abstract class MockServerBaseTest {
     // Create a test service
     fun provideTestDirectoryService(): DirectoryService {
         return Retrofit.Builder().baseUrl(mockServer.url("/")).addConverterFactory(
-            GsonConverterFactory.create()
+            MoshiConverterFactory.create()
         ).client(OkHttpClient.Builder().build()).build().create(DirectoryService::class.java)
     }
 }

@@ -95,6 +95,7 @@ dependencies {
 
     implementation(AppDependencies.kotlinStdLib)
     implementation(AppDependencies.kotlinCoRoutinesCore)
+    implementation(AppDependencies.jakeWhartonCoRoutineAdapter)
     implementation(AppDependencies.fragmentKTX)
     implementation(AppDependencies.appcompat)
     implementation(AppDependencies.constraintLayout)
@@ -111,7 +112,10 @@ dependencies {
     implementation(AppDependencies.lifeCycleLiveDataKTX)
 
     implementation(AppDependencies.retrofit)
-    implementation(AppDependencies.retrofitGson)
+    implementation(AppDependencies.retrofitMoshi)
+    implementation(AppDependencies.moshi)
+    implementation(AppDependencies.moshiKotlin)
+    kapt(AppDependencies.moshiCodegen)
     implementation(AppDependencies.okhttp3Interceptor)
     implementation(AppDependencies.picasso)
 
@@ -136,6 +140,7 @@ dependencies {
     testImplementation(AppDependencies.hamcrest)
     testImplementation(AppDependencies.truth)
     testImplementation(AppDependencies.mockk)
+    testImplementation(AppDependencies.mockkAndroid)
     testImplementation(AppDependencies.nharmaanMockito)
     testImplementation(AppDependencies.okHttpMockServer)
 
@@ -152,6 +157,7 @@ dependencies {
     androidTestImplementation(AppDependencies.espressoContrib)
     androidTestImplementation(AppDependencies.mockito)
     androidTestImplementation(AppDependencies.mockk)
+    androidTestImplementation(AppDependencies.mockkAndroid)
     androidTestImplementation(AppDependencies.navigationTesting)
 
     debugImplementation(AppDependencies.fragmentTesting)

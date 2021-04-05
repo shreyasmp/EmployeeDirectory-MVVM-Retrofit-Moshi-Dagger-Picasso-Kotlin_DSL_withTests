@@ -37,8 +37,6 @@ open class EmployeeListAdapter @Inject constructor(private val picasso: Picasso)
     override fun onBindViewHolder(holder: EmployeeViewHolder, position: Int) {
         holder.bind(employeeList[position])
         holder.binding.apply {
-            employeeName.text = employeeList[position].full_name
-            employeeTeam.text = employeeList[position].team
             picasso.load(employeeList[position].photo_url_small).placeholder(R.drawable.no_photo)
                 .into(employeePhoto)
         }

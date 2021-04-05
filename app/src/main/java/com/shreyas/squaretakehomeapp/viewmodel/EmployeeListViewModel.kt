@@ -43,8 +43,8 @@ class EmployeeListViewModel @Inject constructor(private val repository: Director
                     if (empList != null) {
                         if (empList.isNotEmpty()) {
                             isError.value = false
-                            Log.i(TAG, "Employee List: ${result.value.value?.employees}")
-                            _employeeList.value = result.value.value?.employees
+                            Log.i(TAG, "Employee List: $empList")
+                            _employeeList.value = empList
                         } else if (empList.isEmpty()) {
                             isError.value = true
                         }

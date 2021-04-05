@@ -66,7 +66,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
             jsonFile = "employee_list.json",
             tClass = EmployeeResponse::class.java
         )
-        viewModel._employeeList.postValue(response?.employees)
+        viewModel._employeeList.value = response?.employees
         coroutineTestRule.runBlockingTest {
             viewModel.employeeList.observeForever(employeeListResponseObserver)
             `when`(repository.getEmployeeDirectory()).thenAnswer {

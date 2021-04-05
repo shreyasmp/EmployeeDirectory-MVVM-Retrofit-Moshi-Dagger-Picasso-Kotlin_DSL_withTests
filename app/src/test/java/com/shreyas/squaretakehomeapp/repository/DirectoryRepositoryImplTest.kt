@@ -6,7 +6,6 @@ import com.shreyas.squaretakehomeapp.base.MockServerBaseTest
 import com.shreyas.squaretakehomeapp.service.DirectoryService
 import com.shreyas.squaretakehomeapp.utils.ResultWrapper
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -61,12 +60,26 @@ class DirectoryRepositoryImplTest : MockServerBaseTest() {
     }
 
     @Test
+    fun `given response as OK when fetch employee list results in malformed list and exception`() {
+        runBlocking {
+            mockHttpResponseFromFile("employee_malformed.json", HttpURLConnection.HTTP_OK)
+            when (val result = repositoryImpl.getEmployeeDirectory()) {
+                is ResultWrapper.FAILURE -> {
+                    assertThat(result).isNotNull()
+                    val expectedResponse = ResultWrapper.FAILURE(null)
+                    assertThat(expectedResponse.code).isEqualTo((result).code)
+                }
+            }
+        }
+    }
+
+    @Test
     fun `given response as FAILURE when fetch employee list results in exception`() {
         runBlocking {
             mockHttpResponse(403)
             when (val result = repositoryImpl.getEmployeeDirectory()) {
                 is ResultWrapper.FAILURE -> {
-                    Assert.assertNotNull(result)
+                    assertThat(result).isNotNull()
                     val expectedResponse = ResultWrapper.FAILURE(null)
                     assertThat(expectedResponse.code).isEqualTo((result).code)
                 }

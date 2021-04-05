@@ -24,11 +24,16 @@ open class DirectoryRepositoryImpl @Inject constructor(
 
     override suspend fun getEmployeeDirectory(): ResultWrapper<LiveData<EmployeeResponse>> {
         val employeeResponse = MutableLiveData<EmployeeResponse>()
-        val deferredResponse = service.fetchEmployeeDirectory()
-        val responseBody = deferredResponse.body()
         return try {
-            if (deferredResponse.isSuccessful && responseBody != null) {
-                employeeResponse.postValue(deferredResponse.body())
+            // Switch service here to see different service scenarios handled
+//            val deferredResponse = service.fetchEmployeeEmptyDirectory()
+
+//            val deferredResponse = service.fetchEmployeeMalformedDirectory()
+
+            val deferredResponse = service.fetchEmployeeDirectoryAsync()
+            val responseBody = deferredResponse.await()
+            if (deferredResponse.isCompleted && responseBody.body() != null) {
+                employeeResponse.postValue(responseBody.body())
                 ResultWrapper.SUCCESS(employeeResponse)
             } else {
                 ResultWrapper.FAILURE(null)

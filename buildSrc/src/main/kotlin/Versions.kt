@@ -3,6 +3,7 @@ object Versions {
     const val gradle = "4.1.2"
     const val kotlin = "1.4.21"
     const val kotlinCoroutine = "1.4.0"
+    const val coRoutineAdapter = "0.9.2"
     const val navigation = "2.3.4"
 
     const val coreKTX = "1.3.2"
@@ -13,6 +14,7 @@ object Versions {
 
     const val archLifeCycle = "2.2.0"
     const val retrofit = "2.9.0"
+    const val moshi = "1.12.0"
     const val recyclerView = "1.1.0"
     const val cardView = "1.0.0"
     const val support = "1.0.0"
