@@ -4,7 +4,7 @@
 
 1. Model-View-ViewModel architecture with theming change based on Phone theme
 2. Dagger for Dependency Injection
-3. Retrofit for Service
+3. Retrofit for Service with Moshi for Json Parsing
 4. Kotlin for development
 5. Kotlin DSL for converting gradle scripts from Groovy to Kotlin
 6. Coroutines for viewModel handling
