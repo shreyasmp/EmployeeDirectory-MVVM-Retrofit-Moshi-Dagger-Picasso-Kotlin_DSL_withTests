@@ -74,6 +74,9 @@ android {
             isIncludeAndroidResources = true
             isReturnDefaultValues = true
         }
+        unitTests.all { test ->
+            test.jvmArgs = listOf("-ea -noverify")
+        }
     }
     sourceSets {
         getByName("main").java.srcDir("src/main/java")

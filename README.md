@@ -12,3 +12,8 @@
 8. Picasso Image API for image loading/caching
 9. Mockito/Espresso/extJunit/Robolectric for unit testing and android tests for viewmodel, views and repository testing
 10. OKHttp Interceptor/Mockserver for logging service responses on Logcat and creating mock server for testing Repository
+
+Run Test by coverage shows 25% on current code with Robolectric having know issue with coverage as per below open ticket:
+https://github.com/robolectric/robolectric/issues/5428
+
+When tests are run normal, it executes all fine
