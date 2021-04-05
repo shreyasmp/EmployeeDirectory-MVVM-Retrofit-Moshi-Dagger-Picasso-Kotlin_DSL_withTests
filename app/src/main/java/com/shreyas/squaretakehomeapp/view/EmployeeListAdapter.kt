@@ -22,7 +22,7 @@ open class EmployeeListAdapter @Inject constructor(private val picasso: Picasso)
     }
 
     @VisibleForTesting
-    internal lateinit var employeeList: List<Employee>
+    internal lateinit var employeeList: MutableList<Employee>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmployeeViewHolder {
         val binding: EmployeeDirectoryItemBinding = DataBindingUtil.inflate(
@@ -44,7 +44,11 @@ open class EmployeeListAdapter @Inject constructor(private val picasso: Picasso)
 
     override fun getItemCount(): Int = employeeList.size
 
-    fun updateEmployeeList(employeeDirectoryList: List<Employee>) {
+    fun updateEmployeeList(employeeDirectoryList: MutableList<Employee>) {
+        // Sort employee list by name
+        employeeDirectoryList.sortBy { employee ->
+            employee.full_name
+        }
         employeeList = employeeDirectoryList
     }
 }
