@@ -1,7 +1,6 @@
 package com.shreyas.squaretakehomeapp.view
 
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.google.common.truth.Truth.assertThat
@@ -32,7 +31,6 @@ class EmployeeListAdapterRoboTest {
 
     private val mockPicasso = mock(Picasso::class.java)
     private val mockRequestCreator = mock(RequestCreator::class.java)
-    private val mockImageView = mock(ImageView::class.java)
 
     @Inject
     lateinit var picasso: Picasso
