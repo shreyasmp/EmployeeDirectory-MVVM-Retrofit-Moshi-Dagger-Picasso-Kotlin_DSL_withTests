@@ -20,11 +20,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
-import org.robolectric.annotation.LooperMode
 import javax.inject.Inject
 
 @RunWith(DirectoryRobolectricTestRunner::class)
-@LooperMode(LooperMode.Mode.LEGACY)
 class EmployeeListAdapterRoboTest {
 
     private lateinit var adapter: EmployeeListAdapter
@@ -41,7 +39,7 @@ class EmployeeListAdapterRoboTest {
         @JvmStatic
         fun initMocks() {
             mockkStatic(
-                Picasso::class
+                    Picasso::class
             )
         }
 
@@ -49,7 +47,7 @@ class EmployeeListAdapterRoboTest {
         @JvmStatic
         fun resetMocks() {
             unmockkStatic(
-                Picasso::class
+                    Picasso::class
             )
         }
     }
@@ -112,10 +110,10 @@ class EmployeeListAdapterRoboTest {
     private fun loadEmployeeList(): MutableList<Employee> {
         val empList = mutableListOf<Employee>()
         val response =
-            TestJsonUtils.getObjectFromJsonFile(
-                jsonFile = "employee_list.json",
-                EmployeeResponse::class.java
-            )
+                TestJsonUtils.getObjectFromJsonFile(
+                        jsonFile = "employee_list.json",
+                        EmployeeResponse::class.java
+                )
         if (response != null) {
             empList.addAll(response.employees)
         }

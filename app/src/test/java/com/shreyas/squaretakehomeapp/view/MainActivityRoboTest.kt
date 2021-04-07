@@ -21,6 +21,7 @@ import dagger.Provides
 import dagger.android.AndroidInjectionModule
 import dagger.android.support.AndroidSupportInjectionModule
 import dagger.multibindings.IntoMap
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,7 +38,7 @@ class MainActivityRoboTest {
     @Before
     fun setUp() {
         activityTest =
-            Robolectric.buildActivity(MainActivity::class.java).create().visible().get()
+                Robolectric.buildActivity(MainActivity::class.java).create().visible().get()
     }
 
     @Test
@@ -64,21 +65,21 @@ class MainActivityRoboTest {
     }
 
     @Module(
-        includes = [
-            AndroidSupportInjectionModule::class,
-            AndroidInjectionModule::class,
-            AndroidSupportInjectionModule::class,
-            ViewModelFactoryModule::class,
-            DirectoryServiceModule::class,
-            PicassoModule::class,
-            TestEmployeeViewModelModule::class
-        ]
+            includes = [
+                AndroidSupportInjectionModule::class,
+                AndroidInjectionModule::class,
+                AndroidSupportInjectionModule::class,
+                ViewModelFactoryModule::class,
+                DirectoryServiceModule::class,
+                PicassoModule::class,
+                TestEmployeeViewModelModule::class
+            ]
     )
     class TestAppModule {
 
         @Provides
         fun providesTestApplication(): Application =
-            ApplicationProvider.getApplicationContext<TestApplication>()
+                ApplicationProvider.getApplicationContext<TestApplication>()
 
         @Provides
         fun provideApplicationContext(application: Application): Context {
@@ -93,5 +94,10 @@ class MainActivityRoboTest {
         @IntoMap
         @ViewModelKey(EmployeeListViewModel::class)
         abstract fun bindEmployeeListViewModel(employeeListViewModel: EmployeeListViewModel): ViewModel
+    }
+
+    @After
+    fun tearDown() {
+        activityTest.finish()
     }
 }
