@@ -15,8 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/directory_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/cardview_light_background">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/load_employees_progressbar"
