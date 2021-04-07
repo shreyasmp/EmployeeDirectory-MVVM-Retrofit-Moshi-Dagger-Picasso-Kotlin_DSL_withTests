@@ -36,16 +36,16 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `test employee list live data is null at first`() {
+    fun `employee list live data is null at first`() {
         val employeeListLiveData = viewModel.employeeList.testObserver()
         assertThat(employeeListLiveData.observedValues).isEmpty()
     }
 
     @Test
-    fun `test employee list live data has success data`() {
+    fun `employee list live data has success data`() {
         val employeeResponse = getObjectFromJsonFile(
-            jsonFile = "employee_list.json",
-            tClass = EmployeeResponse::class.java
+                jsonFile = "employee_list.json",
+                tClass = EmployeeResponse::class.java
         )
         viewModel._employeeList.value = employeeResponse?.employees
         val employeeListLiveData = viewModel.employeeList.testObserver()
@@ -53,7 +53,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `test employee list live data has error`() {
+    fun `employee list live data has error`() {
         val error = null
         viewModel._employeeList.value = error
         val errorListLiveData = viewModel.employeeList.testObserver()
@@ -61,34 +61,46 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     }
 
     @Test
-    fun `test fetch employee list http success is as expected`() {
-        val response = getObjectFromJsonFile(
-            jsonFile = "employee_list.json",
-            tClass = EmployeeResponse::class.java
-        )
-        viewModel._employeeList.value = response?.employees
+    fun `on http success fetch employee list is as expected`() {
         coroutineTestRule.runBlockingTest {
+            // Setup
+            val response = getObjectFromJsonFile(
+                    jsonFile = "employee_list.json",
+                    tClass = EmployeeResponse::class.java
+            )
+            viewModel._employeeList.value = response?.employees
             viewModel.employeeList.observeForever(employeeListResponseObserver)
-            `when`(repository.getEmployeeDirectory()).thenAnswer {
-                viewModel._employeeList
-            }
+
+            // Expectation
+            doReturn(viewModel.employeeList).`when`(repository).getEmployeeDirectory()
+
+            // Execution
             viewModel.fetchEmployeeList()
+
+            // Assertion
             assertThat(viewModel.employeeList.value).isEqualTo(viewModel._employeeList.value)
+
+            // Verification
             verify(repository, times(2)).getEmployeeDirectory()
         }
     }
 
     @Test
-    fun `test fetch employee list http success is not as expected`() {
-        val exception = mock(Exception::class.java)
+    fun `on http error fetch employee list is empty`() {
         coroutineTestRule.runBlockingTest {
+            val response = getObjectFromJsonFile(
+                    jsonFile = "empty_list.json",
+                    tClass = EmployeeResponse::class.java
+            )
+            viewModel._employeeList.value = response?.employees
             viewModel.employeeList.observeForever(employeeListResponseObserver)
-            `when`(repository.getEmployeeDirectory()).thenAnswer {
-                exception.message
-            }
+
+            doThrow(RuntimeException::class.java).`when`(repository).getEmployeeDirectory()
+
             viewModel.fetchEmployeeList()
-            assertThat(viewModel.employeeList.value).isNull()
-            assertThat(viewModel.employeeList.value).isEqualTo(exception.message)
+
+            assertThat(viewModel.employeeList.value).isEmpty()
+
             verify(repository, times(2)).getEmployeeDirectory()
         }
     }
