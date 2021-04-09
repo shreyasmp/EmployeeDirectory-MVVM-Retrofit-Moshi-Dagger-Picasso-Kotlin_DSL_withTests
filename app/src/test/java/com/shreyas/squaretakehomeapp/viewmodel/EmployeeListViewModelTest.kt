@@ -78,7 +78,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
             viewModel.fetchEmployeeList()
 
             // Assertion
-            assertThat(viewModel.employeeList.value).isEqualTo(viewModel._employeeList.value)
+            assertThat(viewModel.employeeList.value).isEqualTo(response?.employees)
 
             // Verification
             verify(repository, times(2)).getEmployeeDirectory()
