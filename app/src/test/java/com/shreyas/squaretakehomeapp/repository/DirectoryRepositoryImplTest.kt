@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.shreyas.squaretakehomeapp.base.MockServerBaseTest
 import com.shreyas.squaretakehomeapp.service.DirectoryService
 import com.shreyas.squaretakehomeapp.utils.ResultWrapper
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +33,7 @@ class DirectoryRepositoryImplTest : MockServerBaseTest() {
 
     @Test
     fun `given response as OK when fetch employee list results in full list`() {
-        runBlocking {
+        runBlockingTest {
             mockHttpResponseFromFile("employee_list.json", HttpURLConnection.HTTP_OK)
             when (val result = repositoryImpl.getEmployeeDirectory()) {
                 is ResultWrapper.SUCCESS -> {
@@ -47,7 +47,7 @@ class DirectoryRepositoryImplTest : MockServerBaseTest() {
 
     @Test
     fun `given response as OK when fetch employee list results in empty list`() {
-        runBlocking {
+        runBlockingTest {
             mockHttpResponseFromFile("empty_list.json", HttpURLConnection.HTTP_OK)
             when (val result = repositoryImpl.getEmployeeDirectory()) {
                 is ResultWrapper.SUCCESS -> {
@@ -61,7 +61,7 @@ class DirectoryRepositoryImplTest : MockServerBaseTest() {
 
     @Test
     fun `given response as OK when fetch employee list results in malformed list and exception`() {
-        runBlocking {
+        runBlockingTest {
             mockHttpResponseFromFile("employee_malformed.json", HttpURLConnection.HTTP_OK)
             when (val result = repositoryImpl.getEmployeeDirectory()) {
                 is ResultWrapper.FAILURE -> {
@@ -75,7 +75,7 @@ class DirectoryRepositoryImplTest : MockServerBaseTest() {
 
     @Test
     fun `given response as FAILURE when fetch employee list results in exception`() {
-        runBlocking {
+        runBlockingTest {
             mockHttpResponse(403)
             when (val result = repositoryImpl.getEmployeeDirectory()) {
                 is ResultWrapper.FAILURE -> {

@@ -25,7 +25,7 @@ object TestJsonUtils {
         val jsonString: String
         try {
             val inputStream: InputStream =
-                this.javaClass.classLoader!!.getResourceAsStream(fileName)
+                    this.javaClass.classLoader!!.getResourceAsStream(fileName)
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)
@@ -39,8 +39,8 @@ object TestJsonUtils {
     }
 
     fun <T> getObjectFromJsonFile(
-        jsonFile: String,
-        tClass: Class<T>?
+            jsonFile: String,
+            tClass: Class<T>
     ): T? {
         var inputStream: InputStream? = null
         try {
@@ -65,8 +65,8 @@ object TestJsonUtils {
     }
 
     private fun <T> getObjectFromJsonString(
-        jsonData: String,
-        tClass: Class<T>?
+            jsonData: String,
+            tClass: Class<T>
     ): T? {
         val adapter: JsonAdapter<T> = moshi.adapter(tClass)
         return adapter.fromJson(jsonData)
@@ -100,10 +100,10 @@ object TestJsonUtils {
 
     fun startFragment(fragment: Fragment) {
         val activity = Robolectric.buildActivity(FragmentActivity::class.java)
-            .create()
-            .start()
-            .resume()
-            .get()
+                .create()
+                .start()
+                .resume()
+                .get()
         val fragmentManager = activity.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(fragment, null)
