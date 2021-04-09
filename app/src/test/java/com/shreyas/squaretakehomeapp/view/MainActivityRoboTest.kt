@@ -68,7 +68,6 @@ class MainActivityRoboTest {
             includes = [
                 AndroidSupportInjectionModule::class,
                 AndroidInjectionModule::class,
-                AndroidSupportInjectionModule::class,
                 ViewModelFactoryModule::class,
                 DirectoryServiceModule::class,
                 PicassoModule::class,
