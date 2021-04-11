@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.shreyas.squaretakehomeapp.repository.DirectoryRepositoryImpl
+import com.shreyas.squaretakehomeapp.repository.NetworkStatusRepositoryImpl
 import com.shreyas.squaretakehomeapp.runner.DirectoryRobolectricTestRunner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -60,6 +61,9 @@ abstract class BaseViewModelTest {
 
     @Mock
     lateinit var repository: DirectoryRepositoryImpl
+
+    @Mock
+    lateinit var networkRepository: NetworkStatusRepositoryImpl
 
     @Before
     open fun setUp() {

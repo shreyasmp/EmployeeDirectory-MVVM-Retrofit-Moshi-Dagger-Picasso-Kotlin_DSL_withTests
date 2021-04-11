@@ -8,14 +8,19 @@ import androidx.lifecycle.viewModelScope
 import com.shreyas.squaretakehomeapp.base.BaseViewModel
 import com.shreyas.squaretakehomeapp.model.Employee
 import com.shreyas.squaretakehomeapp.repository.DirectoryRepositoryImpl
+import com.shreyas.squaretakehomeapp.repository.NetworkStatusRepository
+import com.shreyas.squaretakehomeapp.repository.NetworkStatusRepositoryImpl
 import com.shreyas.squaretakehomeapp.utils.ResultWrapper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class EmployeeListViewModel @Inject constructor(private val repository: DirectoryRepositoryImpl) :
-    BaseViewModel() {
+class EmployeeListViewModel @Inject constructor(
+        private val repository: DirectoryRepositoryImpl,
+        private val networkStatusRepository: NetworkStatusRepositoryImpl) :
+        BaseViewModel() {
 
     companion object {
         private val TAG = EmployeeListViewModel::class.java.simpleName
@@ -26,7 +31,24 @@ class EmployeeListViewModel @Inject constructor(private val repository: Director
     val employeeList: LiveData<MutableList<Employee>> = _employeeList
 
     init {
-        fetchEmployeeList()
+        this.viewModelScope.launch {
+            networkStatusRepository.networkStatus.consumeEach { networkStatus ->
+                when (networkStatus) {
+                    // If Connectivity is currently Wifi/Cellular on resuming network connection on disconnect,
+                    // Perform service call automatically
+                    is NetworkStatusRepository.NetworkStatus.WiFi -> {
+                        fetchEmployeeList()
+                    }
+                    is NetworkStatusRepository.NetworkStatus.Cellular -> {
+                        fetchEmployeeList()
+                    }
+                    else -> {
+                        // To Simulate if in case network is lost, a error is shown on screen
+                        isError.value = true
+                    }
+                }
+            }
+        }
     }
 
     @VisibleForTesting

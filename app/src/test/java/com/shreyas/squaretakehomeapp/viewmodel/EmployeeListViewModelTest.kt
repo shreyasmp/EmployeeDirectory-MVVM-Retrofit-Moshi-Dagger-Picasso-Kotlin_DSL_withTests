@@ -27,7 +27,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        viewModel = EmployeeListViewModel(repository)
+        viewModel = EmployeeListViewModel(repository, networkRepository)
     }
 
     @Test
@@ -81,7 +81,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
             assertThat(viewModel.employeeList.value).isEqualTo(response?.employees)
 
             // Verification
-            verify(repository, times(2)).getEmployeeDirectory()
+            verify(repository, times(1)).getEmployeeDirectory()
         }
     }
 
@@ -101,7 +101,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
             assertThat(viewModel.employeeList.value).isEmpty()
 
-            verify(repository, times(2)).getEmployeeDirectory()
+            verify(repository, times(1)).getEmployeeDirectory()
         }
     }
 
