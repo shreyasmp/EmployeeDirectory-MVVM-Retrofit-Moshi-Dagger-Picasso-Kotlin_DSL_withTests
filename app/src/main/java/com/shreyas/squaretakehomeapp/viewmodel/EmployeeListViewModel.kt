@@ -31,7 +31,7 @@ class EmployeeListViewModel @Inject constructor(
     val employeeList: LiveData<MutableList<Employee>> = _employeeList
 
     init {
-        this.viewModelScope.launch {
+        viewModelScope.launch {
             networkStatusRepository.networkStatus.consumeEach { networkStatus ->
                 when (networkStatus) {
                     // If Connectivity is currently Wifi/Cellular on resuming network connection on disconnect,
