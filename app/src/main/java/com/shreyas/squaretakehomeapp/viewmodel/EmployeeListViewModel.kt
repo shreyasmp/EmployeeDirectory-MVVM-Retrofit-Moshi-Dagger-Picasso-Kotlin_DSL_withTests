@@ -42,9 +42,8 @@ class EmployeeListViewModel @Inject constructor(
                     is NetworkStatusRepository.NetworkStatus.Cellular -> {
                         fetchEmployeeList()
                     }
-                    else -> {
-                        // To Simulate if in case network is lost, a error is shown on screen
-                        isError.value = true
+                    is NetworkStatusRepository.NetworkStatus.NoNetworkAvailable -> {
+                        // Do nothing and show what is fetched so far from last network
                     }
                 }
             }
