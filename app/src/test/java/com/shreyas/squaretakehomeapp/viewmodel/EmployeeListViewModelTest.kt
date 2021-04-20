@@ -44,8 +44,8 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     @Test
     fun `employee list live data has success data`() {
         val employeeResponse = getObjectFromJsonFile(
-                jsonFile = "employee_list.json",
-                tClass = EmployeeResponse::class.java
+            jsonFile = "employee_list.json",
+            tClass = EmployeeResponse::class.java
         )
         viewModel._employeeList.value = employeeResponse?.employees
         val employeeListLiveData = viewModel.employeeList.testObserver()
@@ -65,8 +65,8 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
         coroutineTestRule.runBlockingTest {
             // Setup
             val response = getObjectFromJsonFile(
-                    jsonFile = "employee_list.json",
-                    tClass = EmployeeResponse::class.java
+                jsonFile = "employee_list.json",
+                tClass = EmployeeResponse::class.java
             )
             viewModel._employeeList.value = response?.employees
             viewModel.employeeList.observeForever(employeeListResponseObserver)
@@ -82,6 +82,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
             // Verification
             verify(repository, times(1)).getEmployeeDirectory()
+            verify(employeeListResponseObserver).onChanged(viewModel.employeeList.value)
         }
     }
 
@@ -89,8 +90,8 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
     fun `on http error fetch employee list is empty`() {
         coroutineTestRule.runBlockingTest {
             val response = getObjectFromJsonFile(
-                    jsonFile = "empty_list.json",
-                    tClass = EmployeeResponse::class.java
+                jsonFile = "empty_list.json",
+                tClass = EmployeeResponse::class.java
             )
             viewModel._employeeList.value = response?.employees
             viewModel.employeeList.observeForever(employeeListResponseObserver)
@@ -101,7 +102,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
             assertThat(viewModel.employeeList.value).isEmpty()
 
-            verify(repository).getEmployeeDirectory()
+            verify(employeeListResponseObserver).onChanged(viewModel.employeeList.value)
         }
     }
 
