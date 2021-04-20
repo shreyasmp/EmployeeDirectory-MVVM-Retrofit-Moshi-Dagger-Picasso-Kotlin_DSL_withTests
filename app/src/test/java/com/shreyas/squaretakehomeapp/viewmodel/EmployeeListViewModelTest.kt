@@ -101,7 +101,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
             assertThat(viewModel.employeeList.value).isEmpty()
 
-            verify(repository, times(1)).getEmployeeDirectory()
+            verify(repository).getEmployeeDirectory()
         }
     }
 

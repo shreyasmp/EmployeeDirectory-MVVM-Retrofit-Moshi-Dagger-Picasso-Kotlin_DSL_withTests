@@ -23,6 +23,8 @@ import org.mockito.MockitoAnnotations
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
 
+// Reference: https://proandroiddev.com/how-to-unit-test-code-with-coroutines-50c1640f6bef
+
 @ExperimentalCoroutinesApi
 class CoRoutinesTestRule : TestRule {
 
@@ -40,7 +42,7 @@ class CoRoutinesTestRule : TestRule {
     }
 
     fun runBlockingTest(block: suspend TestCoroutineScope.() -> Unit) =
-        testCoRoutineScope.runBlockingTest { block() }
+            testCoRoutineScope.runBlockingTest { block() }
 }
 
 @ExperimentalCoroutinesApi
