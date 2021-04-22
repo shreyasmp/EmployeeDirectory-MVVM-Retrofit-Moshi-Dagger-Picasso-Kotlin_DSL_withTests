@@ -79,6 +79,9 @@ When tests are run normal, it executes all fine
 
 ![alt text](https://github.com/shreyasmp/EmployeeDirectory-MVVM-Retrofit-Moshi-Dagger-Picasso-Kotlin_DSL_withTests/blob/develop/Screen%20Shot%202021-04-22%20at%201.10.32%20AM.png "Unit Tests Coverage")
 
+## Unit Tests
+
+![alt text](https://github.com/shreyasmp/EmployeeDirectory-MVVM-Retrofit-Moshi-Dagger-Picasso-Kotlin_DSL_withTests/blob/develop/Screen%20Shot%202021-04-22%20at%201.10.55%20AM.png "Unit Tests")
 
 
 
