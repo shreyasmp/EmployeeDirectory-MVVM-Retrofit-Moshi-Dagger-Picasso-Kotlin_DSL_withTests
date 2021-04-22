@@ -18,9 +18,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class EmployeeListViewModel @Inject constructor(
-        private val repository: DirectoryRepositoryImpl,
-        private val networkStatusRepository: NetworkStatusRepositoryImpl) :
-        BaseViewModel() {
+    private val repository: DirectoryRepositoryImpl,
+    private val networkStatusRepository: NetworkStatusRepositoryImpl
+) :
+    BaseViewModel() {
 
     companion object {
         private val TAG = EmployeeListViewModel::class.java.simpleName
@@ -33,16 +34,16 @@ class EmployeeListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             networkStatusRepository.networkStatus.consumeEach { networkStatus ->
-                when (networkStatus) {
-                    // If Connectivity is currently Wifi/Cellular on resuming network connection on disconnect,
-                    // Perform service call automatically
-                    is NetworkStatusRepository.NetworkStatus.WiFi -> {
+                // If Connectivity is currently Wifi/Cellular on resuming network connection on disconnect,
+                // Perform service call automatically
+                when {
+                    isNetworkStatusWiFi(networkStatus) -> {
                         fetchEmployeeList()
                     }
-                    is NetworkStatusRepository.NetworkStatus.Cellular -> {
+                    isNetworkStatusCellular(networkStatus) -> {
                         fetchEmployeeList()
                     }
-                    is NetworkStatusRepository.NetworkStatus.NoNetworkAvailable -> {
+                    isNetworkStatusNotAvailable(networkStatus) -> {
                         // Do nothing and show what is fetched so far from last network
                     }
                 }
@@ -78,5 +79,20 @@ class EmployeeListViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    @VisibleForTesting
+    internal fun isNetworkStatusWiFi(status: NetworkStatusRepository.NetworkStatus): Boolean {
+        return status == NetworkStatusRepository.NetworkStatus.WiFi
+    }
+
+    @VisibleForTesting
+    internal fun isNetworkStatusCellular(status: NetworkStatusRepository.NetworkStatus): Boolean {
+        return status == NetworkStatusRepository.NetworkStatus.Cellular
+    }
+
+    @VisibleForTesting
+    internal fun isNetworkStatusNotAvailable(status: NetworkStatusRepository.NetworkStatus): Boolean {
+        return status == NetworkStatusRepository.NetworkStatus.NoNetworkAvailable
     }
 }

@@ -27,49 +27,45 @@ interface NetworkStatusRepository {
 }
 
 @Singleton
-open class NetworkStatusRepositoryImpl @Inject constructor(context: Context) : NetworkStatusRepository {
+open class NetworkStatusRepositoryImpl @Inject constructor(context: Context) :
+    NetworkStatusRepository {
 
     override val networkStatus = ConflatedBroadcastChannel<NetworkStatusRepository.NetworkStatus>()
 
-    private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     init {
         // Registering network callback on different connections, currently considering WiFi/Mobile only
         connectivityManager.registerDefaultNetworkCallback(object :
-                ConnectivityManager.NetworkCallback() {
+            ConnectivityManager.NetworkCallback() {
 
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                connectivityManager.activeNetwork?.let {
-                    connectivityManager.getNetworkCapabilities(it)
-                }?.also {
+                connectivityManager.activeNetwork?.let { connectedNetwork ->
+                    connectivityManager.getNetworkCapabilities(connectedNetwork)
+                }?.also { connectedNetworkCapabilities ->
                     when {
-                        it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                            MainScope().launch {
-                                networkStatus.send(
-                                        NetworkStatusRepository.NetworkStatus.WiFi
-                                )
-                            }
+                        connectedNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                            setNetworkStatus(NetworkStatusRepository.NetworkStatus.WiFi)
                         }
-                        it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                            MainScope().launch {
-                                networkStatus.send(
-                                        NetworkStatusRepository.NetworkStatus.Cellular
-                                )
-                            }
+                        connectedNetworkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                            setNetworkStatus(NetworkStatusRepository.NetworkStatus.Cellular)
                         }
                     }
-                } ?: MainScope().launch {
-                    networkStatus.send(NetworkStatusRepository.NetworkStatus.NoNetworkAvailable)
-                }
+                } ?: setNetworkStatus(NetworkStatusRepository.NetworkStatus.NoNetworkAvailable)
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                MainScope().launch {
-                    networkStatus.send(NetworkStatusRepository.NetworkStatus.NoNetworkAvailable)
-                }
+                setNetworkStatus(NetworkStatusRepository.NetworkStatus.NoNetworkAvailable)
             }
         })
+    }
+
+    private fun setNetworkStatus(status: NetworkStatusRepository.NetworkStatus) {
+        MainScope().launch {
+            networkStatus.send(status)
+        }
     }
 }

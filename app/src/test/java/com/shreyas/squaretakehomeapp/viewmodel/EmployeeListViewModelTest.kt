@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.shreyas.squaretakehomeapp.base.BaseViewModelTest
 import com.shreyas.squaretakehomeapp.model.Employee
 import com.shreyas.squaretakehomeapp.model.EmployeeResponse
+import com.shreyas.squaretakehomeapp.repository.NetworkStatusRepository
 import com.shreyas.squaretakehomeapp.utils.TestJsonUtils.getObjectFromJsonFile
 import com.shreyas.squaretakehomeapp.utils.testObserver
 import io.mockk.impl.annotations.SpyK
@@ -107,6 +108,24 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
 
             verify(employeeListResponseObserver).onChanged(viewModel.employeeList.value)
         }
+    }
+
+    @Test
+    fun `network status for WiFi is as expected`() {
+        val wifiStatus = NetworkStatusRepository.NetworkStatus.WiFi
+        assertThat(viewModel.isNetworkStatusWiFi(wifiStatus)).isTrue()
+    }
+
+    @Test
+    fun `network status for Cellular is as expected`() {
+        val cellularStatus = NetworkStatusRepository.NetworkStatus.Cellular
+        assertThat(viewModel.isNetworkStatusCellular(cellularStatus)).isTrue()
+    }
+
+    @Test
+    fun `network status for No Network is as expected`() {
+        val noStatus = NetworkStatusRepository.NetworkStatus.NoNetworkAvailable
+        assertThat(viewModel.isNetworkStatusNotAvailable(noStatus)).isTrue()
     }
 
     @After
