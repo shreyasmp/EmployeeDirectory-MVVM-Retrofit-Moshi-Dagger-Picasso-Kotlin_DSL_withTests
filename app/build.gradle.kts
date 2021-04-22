@@ -75,7 +75,7 @@ android {
             isReturnDefaultValues = true
         }
         unitTests.all { test ->
-            test.jvmArgs = listOf("-ea -noverify")
+            test.jvmArgs = listOf("-noverify")
         }
     }
     sourceSets {
@@ -90,6 +90,13 @@ tasks.withType<Test> {
     testLogging {
         events("passed", "skipped", "failed")
     }
+}
+
+// Adding this since code coverage fails
+// Known open issue: https://github.com/robolectric/robolectric/issues/3023
+// Work around with -ea -noverify and Edit Configuration to IntelliJ IDEA code coverage runner
+tasks.withType<Test>().all {
+    jvmArgs("-ea -noverify")
 }
 
 dependencies {

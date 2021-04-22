@@ -2,6 +2,10 @@ package com.shreyas.squaretakehomeapp.viewmodel
 
 import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.doThrow
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import com.shreyas.squaretakehomeapp.base.BaseViewModelTest
 import com.shreyas.squaretakehomeapp.model.Employee
 import com.shreyas.squaretakehomeapp.model.EmployeeResponse
@@ -13,7 +17,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.*
 
 @ExperimentalCoroutinesApi
 class EmployeeListViewModelTest : BaseViewModelTest() {
@@ -96,7 +99,7 @@ class EmployeeListViewModelTest : BaseViewModelTest() {
             viewModel._employeeList.value = response?.employees
             viewModel.employeeList.observeForever(employeeListResponseObserver)
 
-            doThrow(RuntimeException::class.java).`when`(repository).getEmployeeDirectory()
+            doThrow(RuntimeException::class).`when`(repository).getEmployeeDirectory()
 
             viewModel.fetchEmployeeList()
 
