@@ -66,7 +66,7 @@ Although this looks like a very small project, but amount of time taken was dist
 period of 2 days, with 2-3 hrs of work done everyday. I would say it roughly took about 5-6 hrs, 
 Since most of the project setup and dependencies setup i brought it as is from my other Github projects
 
-Run Test by coverage shows 55% on current code with Robolectric having know work around with coverage as per below open ticket:
+Run Test by coverage shows 60% on current code with Robolectric having know work around with coverage as per below open ticket:
 https://github.com/robolectric/robolectric/issues/3023
 Edit Configurations: 
 Code Coverage Runner -> IntelliJ IDEA
