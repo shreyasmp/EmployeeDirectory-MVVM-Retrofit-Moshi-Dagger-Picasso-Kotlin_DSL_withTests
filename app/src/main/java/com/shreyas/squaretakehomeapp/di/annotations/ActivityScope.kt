@@ -3,7 +3,7 @@ package com.shreyas.squaretakehomeapp.di.annotations
 import javax.inject.Scope
 
 /**
- *  Activity Scope to make it singleton
+ *  Custom scope for Activity retention
  */
 @Scope
 @Retention(value = AnnotationRetention.RUNTIME)
