@@ -14,14 +14,14 @@
 10. OKHttp Interceptor/Mockserver for logging service responses on Logcat and creating mock server for testing Repository
 
 # Build Tools and Versions used:
-Android Studio: 4.1.3
-CompileSDK: 30
-MinSDK: 26
-TargetSDK: 30
-BuildToolsVersion: 29.0.3
-GradlePlugin: 4.1.2
-Kotlin: 1.4.21
-Rest of versions can be found at Versions.kt under /buildSrc/src/main/kotlin/Versions.kt
+1. Android Studio: 4.1.3
+2. CompileSDK: 30
+3. MinSDK: 26
+4. TargetSDK: 30
+5. BuildToolsVersion: 29.0.3
+6. GradlePlugin: 4.1.2
+7. Kotlin: 1.4.21
+8. Rest of versions can be found at Versions.kt under /buildSrc/src/main/kotlin/Versions.kt
 
 Run Test by coverage shows 82% on current code with Robolectric having know work around with coverage as per below open ticket:
 https://github.com/robolectric/robolectric/issues/3023
